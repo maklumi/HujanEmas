@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
 import com.ulys.assets.AssetDescriptors
+import com.ulys.skrin.GameScreen
 import kotlinx.coroutines.launch
 import ktx.assets.async.AssetStorage
 import ktx.async.KtxAsync
@@ -16,7 +17,7 @@ class HujanEmas : Game() {
 
         KtxAsync.launch {
             assetStorage.loadAsync(AssetDescriptors.GAME_PLAY).await()
-            setScreen(FirstScreen(assetStorage))
+            setScreen(GameScreen(assetStorage))
         }
     }
 }
