@@ -39,6 +39,7 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         engine.addSystem(Bounds())
         engine.addSystem(SpawnEmas(kilang))
         engine.addSystem(Cleanup())
+        engine.addSystem(Perlanggaran())
 
         engine.addSystem(DebugCamera(camera))
         engine.addSystem(RenderGrid(viewport))
