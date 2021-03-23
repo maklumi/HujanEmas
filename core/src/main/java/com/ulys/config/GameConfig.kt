@@ -10,4 +10,6 @@ object GameConfig {
     const val WORLD_WIDTH = 6f
     const val WORLD_HEIGHT = 10f
 
+    const val PLAYER_BOUNDS_RADIUS = 0.4f
+    const val PLAYER_SIZE = PLAYER_BOUNDS_RADIUS * 2
 }

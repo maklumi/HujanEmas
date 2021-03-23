@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.ulys.KilangEntiti
 import com.ulys.assets.AssetDescriptors
 import com.ulys.assets.RegionName
 import com.ulys.config.GameConfig
 import com.ulys.util.DebugCamera
+import com.ulys.util.RenderDebug
 import com.ulys.util.RenderGrid
 import com.ulys.util.ViewportUtils
 import ktx.assets.async.AssetStorage
@@ -27,10 +29,14 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
     val batch = SpriteBatch()
 
     private val engine = PooledEngine()
+    private val kilang = KilangEntiti(engine)
 
     override fun show() {
         engine.addSystem(DebugCamera(camera))
         engine.addSystem(RenderGrid(viewport))
+        engine.addSystem(RenderDebug(viewport))
+
+        kilang.addPlayer()
     }
 
     override fun render(delta: Float) {
@@ -38,13 +44,6 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         engine.update(delta)
-
-        batch.projectionMatrix = camera.combined
-        batch.begin()
-        batch.draw(latar, 0f, 0f, GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT)
-        batch.draw(katak, 1f, 1f, 1f, 1f)
-        batch.draw(emas, 2f, 2f, 2f, 2f)
-        batch.end()
     }
 
     override fun resize(width: Int, height: Int) {
