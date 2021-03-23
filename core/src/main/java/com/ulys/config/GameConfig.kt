@@ -22,4 +22,5 @@ object GameConfig {
 
     const val LAJU_SLOW = 0.05f
     const val BIL_HAYAT = 3
+    const val SELANG_MARKAH = 0.25f
 }

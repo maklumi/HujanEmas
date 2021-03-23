@@ -11,5 +11,12 @@ object Pengurus {
         return bilHayat <= 0
     }
 
+    fun reset() {
+        bilHayat = GameConfig.BIL_HAYAT
+        markah = 0
+    }
 
+    fun updateScore(amount: Int) {
+        markah += amount
+    }
 }

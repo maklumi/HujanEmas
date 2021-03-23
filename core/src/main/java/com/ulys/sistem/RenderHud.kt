@@ -29,9 +29,9 @@ class RenderHud(
         layout.setText(font, livesString)
         font.draw(batch, livesString, 20f, GameConfig.HUD_HEIGHT - layout.height)
 
-        val scoreString = "MARKAH: " + Pengurus.markah
+        val scoreString = String.format("MARKAH: %10d", Pengurus.markah)
         layout.setText(font, scoreString)
-        font.draw(batch, scoreString, GameConfig.HUD_WIDTH - layout.width - 20f, GameConfig.HUD_HEIGHT - layout.height)
+        font.draw(batch, scoreString, GameConfig.HUD_WIDTH - 270f, GameConfig.HUD_HEIGHT - layout.height)
     }
 
 }

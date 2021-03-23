@@ -55,6 +55,7 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         engine.addSystem(SpawnEmas(kilang))
         engine.addSystem(Cleanup())
         engine.addSystem(Perlanggaran(dengarLaga))
+        engine.addSystem(Pemarkahan())
         engine.addSystem(RenderHud(hudViewport, batch, font))
 
         engine.addSystem(DebugCamera(camera))
@@ -69,6 +70,10 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         engine.update(delta)
+
+        if (Pengurus.kalah()) {
+            Pengurus.reset()
+        }
 
         if (reset) {
             reset = false
