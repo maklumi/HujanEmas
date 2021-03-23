@@ -11,10 +11,7 @@ import com.ulys.KilangEntiti
 import com.ulys.assets.AssetDescriptors
 import com.ulys.assets.RegionName
 import com.ulys.config.GameConfig
-import com.ulys.sistem.Bounds
-import com.ulys.sistem.HadSisi
-import com.ulys.sistem.Kedudukan
-import com.ulys.sistem.HandleInput
+import com.ulys.sistem.*
 import com.ulys.util.DebugCamera
 import com.ulys.util.RenderDebug
 import com.ulys.util.RenderGrid
@@ -40,6 +37,7 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         engine.addSystem(Kedudukan())
         engine.addSystem(HadSisi(viewport))
         engine.addSystem(Bounds())
+        engine.addSystem(SpawnEmas(kilang))
 
         engine.addSystem(DebugCamera(camera))
         engine.addSystem(RenderGrid(viewport))

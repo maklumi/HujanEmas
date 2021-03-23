@@ -29,4 +29,21 @@ class KilangEntiti(private val engine: PooledEngine) {
         }
     }
 
+    fun addEmas(x: Float, y: Float) {
+        engine.add {
+            entity {
+                with<Bounds> {
+                    this.bounds.set(x, y, GameConfig.EMAS_BOUNDS_RADIUS)
+                }
+                with<Posisi> {
+                    this.x = x
+                    this.y = y
+                }
+                with<Laju> {
+                    this.ySpeed = -GameConfig.LAJU_SLOW
+                }
+            }
+        }
+    }
+
 }

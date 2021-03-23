@@ -13,4 +13,10 @@ object GameConfig {
     const val PLAYER_BOUNDS_RADIUS = 0.4f
     const val PLAYER_SIZE = PLAYER_BOUNDS_RADIUS * 2
     const val MAX_PLAYER_X_SPEED = 0.25f
+
+    const val EMAS_BOUNDS_RADIUS = 0.3f
+    const val SAIZ_EMAS = EMAS_BOUNDS_RADIUS * 2
+    const val TEMPOH_SPAWN_EMAS = 2f
+
+    const val LAJU_SLOW = 0.05f
 }
