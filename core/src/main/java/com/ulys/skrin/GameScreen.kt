@@ -21,6 +21,7 @@ import com.ulys.util.RenderGrid
 class GameScreen(private val game: HujanEmas) : Screen {
     private val assetStorage = game.assetStorage
     private val font = assetStorage[AssetDescriptors.FONT]
+    private val hitsound = assetStorage[AssetDescriptors.HIT_SOUND]
 
     private val camera = OrthographicCamera()
     private val viewport = FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera)
@@ -33,6 +34,7 @@ class GameScreen(private val game: HujanEmas) : Screen {
     private val dengarLaga = object : DengarLaga {
         override fun berlaga() {
             Pengurus.bilHayat--
+            hitsound.play()
             if (Pengurus.kalah()) {
                 Pengurus.updateHighScore()
             } else {

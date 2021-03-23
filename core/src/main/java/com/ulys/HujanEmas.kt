@@ -30,6 +30,7 @@ class HujanEmas : Game() {
             generator.dispose()
             assetStorage.add(AssetDescriptors.FONT, bitmapFont)
             assetStorage.loadAsync(AssetDescriptors.UI_SKIN).await()
+            assetStorage.loadAsync(AssetDescriptors.HIT_SOUND).await()
             setScreen(MenuScreen(this@HujanEmas))
         }
     }
