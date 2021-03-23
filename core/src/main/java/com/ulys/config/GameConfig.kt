@@ -21,6 +21,8 @@ object GameConfig {
     const val TEMPOH_SPAWN_EMAS = 2f
 
     const val LAJU_SLOW = 0.05f
+    const val LAJU_MEDIUM = 0.10f
+    const val LAJU_SANGAT = 0.15f
     const val BIL_HAYAT = 3
     const val SELANG_MARKAH = 0.25f
 }

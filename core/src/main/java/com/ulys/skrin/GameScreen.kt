@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FitViewport
+import com.ulys.HujanEmas
 import com.ulys.KilangEntiti
 import com.ulys.assets.AssetDescriptors
 import com.ulys.common.Pengurus
@@ -16,16 +17,15 @@ import com.ulys.sistem.*
 import com.ulys.util.DebugCamera
 import com.ulys.util.RenderDebug
 import com.ulys.util.RenderGrid
-import ktx.assets.async.AssetStorage
 
-class GameScreen(assetStorage: AssetStorage) : Screen {
+class GameScreen(private val game: HujanEmas) : Screen {
+    private val assetStorage = game.assetStorage
+    private val font = assetStorage[AssetDescriptors.FONT]
 
-    val font = assetStorage[AssetDescriptors.FONT]
-
-    val camera = OrthographicCamera()
-    val viewport = FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera)
-    val hudViewport = FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT)
-    val batch = SpriteBatch()
+    private val camera = OrthographicCamera()
+    private val viewport = FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera)
+    private val hudViewport = FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT)
+    private val batch = SpriteBatch()
 
     private val engine = PooledEngine()
     private val kilang = KilangEntiti(engine, assetStorage)
@@ -34,13 +34,15 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         override fun berlaga() {
             Pengurus.bilHayat--
             if (Pengurus.kalah()) {
-                // simpan markah
+                Pengurus.updateHighScore()
             } else {
                 engine.removeAllEntities()
                 reset = true
             }
         }
     }
+
+    private var debug = false
 
     override fun show() {
         engine.addSystem(HandleInput())
@@ -54,10 +56,11 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         engine.addSystem(LukisTekstur(viewport, batch))
         engine.addSystem(RenderHud(hudViewport, batch, font))
 
-        engine.addSystem(DebugCamera(camera))
-        engine.addSystem(RenderGrid(viewport))
-        engine.addSystem(RenderDebug(viewport))
-
+        if (debug) {
+            engine.addSystem(DebugCamera(camera))
+            engine.addSystem(RenderGrid(viewport))
+            engine.addSystem(RenderDebug(viewport))
+        }
         tambahSemuaEntiti()
     }
 
@@ -69,6 +72,7 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
 
         if (Pengurus.kalah()) {
             Pengurus.reset()
+            game.screen = MenuScreen(game)
         }
 
         if (reset) {

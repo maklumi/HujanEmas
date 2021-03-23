@@ -7,16 +7,19 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator
 import com.ulys.assets.AssetDescriptors
 import com.ulys.assets.AssetPaths
 import com.ulys.skrin.GameScreen
+import com.ulys.skrin.MenuScreen
 import kotlinx.coroutines.launch
 import ktx.assets.async.AssetStorage
 import ktx.assets.toInternalFile
 import ktx.async.KtxAsync
 
 class HujanEmas : Game() {
+
+    val assetStorage = AssetStorage()
+
     override fun create() {
         Gdx.app.logLevel = Application.LOG_DEBUG
         KtxAsync.initiate()
-        val assetStorage = AssetStorage()
 
         KtxAsync.launch {
             assetStorage.loadAsync(AssetDescriptors.GAME_PLAY).await()
@@ -26,7 +29,8 @@ class HujanEmas : Game() {
             val bitmapFont = generator.generateFont(parameter)
             generator.dispose()
             assetStorage.add(AssetDescriptors.FONT, bitmapFont)
-            setScreen(GameScreen(assetStorage))
+            assetStorage.loadAsync(AssetDescriptors.UI_SKIN).await()
+            setScreen(MenuScreen(this@HujanEmas))
         }
     }
 }
