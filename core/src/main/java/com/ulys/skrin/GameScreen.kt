@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.ulys.KilangEntiti
 import com.ulys.assets.AssetDescriptors
-import com.ulys.assets.RegionName
 import com.ulys.common.Pengurus
 import com.ulys.config.GameConfig
 import com.ulys.listener.DengarLaga
@@ -21,10 +20,6 @@ import ktx.assets.async.AssetStorage
 
 class GameScreen(assetStorage: AssetStorage) : Screen {
 
-    val gameplay = assetStorage[AssetDescriptors.GAME_PLAY]
-    val latar = gameplay.findRegion(RegionName.LATAR)
-    val katak = gameplay.findRegion(RegionName.KATAK)
-    val emas = gameplay.findRegion(RegionName.EMAS)
     val font = assetStorage[AssetDescriptors.FONT]
 
     val camera = OrthographicCamera()
@@ -33,7 +28,7 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
     val batch = SpriteBatch()
 
     private val engine = PooledEngine()
-    private val kilang = KilangEntiti(engine)
+    private val kilang = KilangEntiti(engine, assetStorage)
     private var reset = false
     private val dengarLaga = object : DengarLaga {
         override fun berlaga() {
@@ -56,6 +51,7 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         engine.addSystem(Cleanup())
         engine.addSystem(Perlanggaran(dengarLaga))
         engine.addSystem(Pemarkahan())
+        engine.addSystem(LukisTekstur(viewport, batch))
         engine.addSystem(RenderHud(hudViewport, batch, font))
 
         engine.addSystem(DebugCamera(camera))
@@ -87,6 +83,7 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
     }
 
     private fun tambahSemuaEntiti() {
+        kilang.addLatar()
         kilang.addPlayer()
     }
 

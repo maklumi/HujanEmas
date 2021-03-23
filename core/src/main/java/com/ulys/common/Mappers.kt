@@ -1,9 +1,6 @@
 package com.ulys.common
 
-import com.ulys.komponen.Bounds
-import com.ulys.komponen.Laju
-import com.ulys.komponen.Posisi
-import com.ulys.komponen.Tabrak
+import com.ulys.komponen.*
 import ktx.ashley.*
 
 object Mappers {
@@ -12,5 +9,7 @@ object Mappers {
     val POSISI = mapperFor<Posisi>()
     val LAJU = mapperFor<Laju>()
     val TABRAK = mapperFor<Tabrak>()
+    val DIMENSI = mapperFor<Dimensi>()
+    val TEKSTUR = mapperFor<Tekstur>()
 
 }
