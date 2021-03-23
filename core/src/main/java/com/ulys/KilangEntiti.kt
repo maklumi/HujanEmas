@@ -2,10 +2,7 @@ package com.ulys
 
 import com.badlogic.ashley.core.PooledEngine
 import com.ulys.config.GameConfig
-import com.ulys.komponen.Bounds
-import com.ulys.komponen.Laju
-import com.ulys.komponen.PlayerTag
-import com.ulys.komponen.Posisi
+import com.ulys.komponen.*
 import ktx.ashley.add
 import ktx.ashley.entity
 import ktx.ashley.with
@@ -27,6 +24,7 @@ class KilangEntiti(private val engine: PooledEngine) {
                     this.y = y
                 }
                 with<Laju>()
+                with<HadSisiTag>()
             }
         }
     }
