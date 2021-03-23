@@ -9,6 +9,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.ulys.assets.AssetDescriptors
 import com.ulys.assets.RegionName
 import com.ulys.config.GameConfig
+import com.ulys.util.DebugCameraController
+import com.ulys.util.ViewportUtils
 import ktx.assets.async.AssetStorage
 
 class FirstScreen(assetStorage: AssetStorage) : Screen {
@@ -26,7 +28,6 @@ class FirstScreen(assetStorage: AssetStorage) : Screen {
     }
 
     override fun render(delta: Float) {
-        if (gameplay == null) return
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
@@ -36,10 +37,12 @@ class FirstScreen(assetStorage: AssetStorage) : Screen {
         batch.draw(katak, 1f, 1f, 1f, 1f)
         batch.draw(emas, 2f, 2f, 2f, 2f)
         batch.end()
+        debug(delta)
     }
 
     override fun resize(width: Int, height: Int) {
         viewport.update(width, height, true)
+        ViewportUtils.debugPixelPerUnit(viewport)
     }
 
     override fun pause() {
@@ -53,5 +56,11 @@ class FirstScreen(assetStorage: AssetStorage) : Screen {
 
     override fun dispose() {
         batch.dispose()
+    }
+
+    private fun debug(delta: Float) {
+        DebugCameraController.handleDebugInput(delta)
+        DebugCameraController.applyPositionToCamera(camera)
+        ViewportUtils.drawGrid(viewport)
     }
 }
