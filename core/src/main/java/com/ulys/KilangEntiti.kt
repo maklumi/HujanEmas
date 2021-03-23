@@ -42,6 +42,7 @@ class KilangEntiti(private val engine: PooledEngine) {
                 with<Laju> {
                     this.ySpeed = -GameConfig.LAJU_SLOW
                 }
+                with<CleanTag>()
             }
         }
     }
