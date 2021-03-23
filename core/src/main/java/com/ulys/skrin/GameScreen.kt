@@ -24,9 +24,11 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
     val latar = gameplay.findRegion(RegionName.LATAR)
     val katak = gameplay.findRegion(RegionName.KATAK)
     val emas = gameplay.findRegion(RegionName.EMAS)
+    val font = assetStorage[AssetDescriptors.FONT]
 
     val camera = OrthographicCamera()
     val viewport = FitViewport(GameConfig.WORLD_WIDTH, GameConfig.WORLD_HEIGHT, camera)
+    val hudViewport = FitViewport(GameConfig.HUD_WIDTH, GameConfig.HUD_HEIGHT)
     val batch = SpriteBatch()
 
     private val engine = PooledEngine()
@@ -40,6 +42,7 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         engine.addSystem(SpawnEmas(kilang))
         engine.addSystem(Cleanup())
         engine.addSystem(Perlanggaran())
+        engine.addSystem(RenderHud(hudViewport, batch, font))
 
         engine.addSystem(DebugCamera(camera))
         engine.addSystem(RenderGrid(viewport))
@@ -57,7 +60,7 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
 
     override fun resize(width: Int, height: Int) {
         viewport.update(width, height, true)
-        ViewportUtils.debugPixelPerUnit(viewport)
+        hudViewport.update(width, height, true)
     }
 
     override fun pause() {

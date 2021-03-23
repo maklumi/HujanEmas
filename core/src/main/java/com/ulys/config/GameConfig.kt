@@ -5,6 +5,8 @@ object GameConfig {
     // dalam piksel
     const val LEBAR = 480
     const val TINGGI = 800
+    const val HUD_WIDTH = 480f
+    const val HUD_HEIGHT = 800f
 
     // dalam kaki
     const val WORLD_WIDTH = 6f
