@@ -11,6 +11,9 @@ import com.ulys.KilangEntiti
 import com.ulys.assets.AssetDescriptors
 import com.ulys.assets.RegionName
 import com.ulys.config.GameConfig
+import com.ulys.sistem.Bounds
+import com.ulys.sistem.Kedudukan
+import com.ulys.sistem.HandleInput
 import com.ulys.util.DebugCamera
 import com.ulys.util.RenderDebug
 import com.ulys.util.RenderGrid
@@ -32,6 +35,10 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
     private val kilang = KilangEntiti(engine)
 
     override fun show() {
+        engine.addSystem(HandleInput())
+        engine.addSystem(Kedudukan())
+        engine.addSystem(Bounds())
+
         engine.addSystem(DebugCamera(camera))
         engine.addSystem(RenderGrid(viewport))
         engine.addSystem(RenderDebug(viewport))
