@@ -10,12 +10,13 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.ulys.KilangEntiti
 import com.ulys.assets.AssetDescriptors
 import com.ulys.assets.RegionName
+import com.ulys.common.Pengurus
 import com.ulys.config.GameConfig
+import com.ulys.listener.DengarLaga
 import com.ulys.sistem.*
 import com.ulys.util.DebugCamera
 import com.ulys.util.RenderDebug
 import com.ulys.util.RenderGrid
-import com.ulys.util.ViewportUtils
 import ktx.assets.async.AssetStorage
 
 class GameScreen(assetStorage: AssetStorage) : Screen {
@@ -33,6 +34,18 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
 
     private val engine = PooledEngine()
     private val kilang = KilangEntiti(engine)
+    private var reset = false
+    private val dengarLaga = object : DengarLaga {
+        override fun berlaga() {
+            Pengurus.bilHayat--
+            if (Pengurus.kalah()) {
+                // simpan markah
+            } else {
+                engine.removeAllEntities()
+                reset = true
+            }
+        }
+    }
 
     override fun show() {
         engine.addSystem(HandleInput())
@@ -41,14 +54,14 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         engine.addSystem(Bounds())
         engine.addSystem(SpawnEmas(kilang))
         engine.addSystem(Cleanup())
-        engine.addSystem(Perlanggaran())
+        engine.addSystem(Perlanggaran(dengarLaga))
         engine.addSystem(RenderHud(hudViewport, batch, font))
 
         engine.addSystem(DebugCamera(camera))
         engine.addSystem(RenderGrid(viewport))
         engine.addSystem(RenderDebug(viewport))
 
-        kilang.addPlayer()
+        tambahSemuaEntiti()
     }
 
     override fun render(delta: Float) {
@@ -56,11 +69,20 @@ class GameScreen(assetStorage: AssetStorage) : Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         engine.update(delta)
+
+        if (reset) {
+            reset = false
+            tambahSemuaEntiti()
+        }
     }
 
     override fun resize(width: Int, height: Int) {
         viewport.update(width, height, true)
         hudViewport.update(width, height, true)
+    }
+
+    private fun tambahSemuaEntiti() {
+        kilang.addPlayer()
     }
 
     override fun pause() {

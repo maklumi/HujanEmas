@@ -7,14 +7,11 @@ import com.ulys.common.Mappers
 import com.ulys.komponen.Bounds
 import com.ulys.komponen.PlayerTag
 import com.ulys.komponen.Tabrak
+import com.ulys.listener.DengarLaga
 import ktx.ashley.allOf
 import ktx.ashley.get
-import ktx.log.debug
-import ktx.log.logger
 
-class Perlanggaran : EntitySystem() {
-
-    private val log = logger<Perlanggaran>()
+class Perlanggaran(private val dengarLaga: DengarLaga) : EntitySystem() {
 
     private val familiPemain = allOf(PlayerTag::class, Bounds::class).get()
     private val familiEmas = allOf(Tabrak::class, Bounds::class).get()
@@ -29,8 +26,7 @@ class Perlanggaran : EntitySystem() {
 
             if (berlaga(pemain, emas)) {
                 tabrak.tertabrak = true
-                engine.removeEntity(emas)
-                log.debug { "berlaga" }
+                dengarLaga.berlaga()
             }
         }
     }

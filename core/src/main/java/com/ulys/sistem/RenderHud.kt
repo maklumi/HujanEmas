@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.GlyphLayout
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.viewport.Viewport
+import com.ulys.common.Pengurus
 import com.ulys.config.GameConfig
 
 class RenderHud(
@@ -24,11 +25,11 @@ class RenderHud(
     }
 
     private fun draw() {
-        val livesString = "BIL HAYAT: "
+        val livesString = "BIL HAYAT: " + Pengurus.bilHayat
         layout.setText(font, livesString)
         font.draw(batch, livesString, 20f, GameConfig.HUD_HEIGHT - layout.height)
 
-        val scoreString = "MARKAH: "
+        val scoreString = "MARKAH: " + Pengurus.markah
         layout.setText(font, scoreString)
         font.draw(batch, scoreString, GameConfig.HUD_WIDTH - layout.width - 20f, GameConfig.HUD_HEIGHT - layout.height)
     }

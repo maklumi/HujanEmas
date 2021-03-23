@@ -21,4 +21,5 @@ object GameConfig {
     const val TEMPOH_SPAWN_EMAS = 2f
 
     const val LAJU_SLOW = 0.05f
+    const val BIL_HAYAT = 3
 }
